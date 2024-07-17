@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slide Show</title>
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f8f6f6cb;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            transition: transform 0.5s ease;
+        }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 16px;
+        }
+        .page-buttons {
+            display: flex;
+            margin: 0 10px;
+        }
+        .page-buttons button {
+            padding: 10px 15px;
+        }
+        .full-screen {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+        }
+        .close-button {
+            position: fixed;
+            top: 10px;
+            right: 70px;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="slide" src="1.html"></iframe>
+    <div class="controls">
+        <button onclick="prevSlide()">Previous</button>
+        <div class="page-buttons">
+            <button onclick="showSlide(1)">1</button>
+            <button onclick="showSlide(2)">2</button>
+            <button onclick="showSlide(3)">3</button>
+            <button onclick="showSlide(4)">4</button>
+            <button onclick="showSlide(5)">5</button>
+            <button onclick="showSlide(6)">6</button>
+            <button onclick="showSlide(7)">7</button>
+            <button onclick="showSlide(8)">8</button>
+            <button onclick="showSlide(9)">9</button>
+        </div>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+    <div class="full-screen">
+        <button onclick="openFullScreen()">Full Screen</button>
+    </div>
+    <div class="close-button" style="display: none;">
+        <button onclick="closeFullScreen()">Close</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 9;
+
+        function showSlide(slideNumber) {
+            const iframe = document.getElementById('slide');
+            iframe.style.transform = 'translateX(-50%)'; // Slide out
+            setTimeout(() => {
+                iframe.src = slideNumber + '.html';
+                iframe.style.transform = 'translateX(50%)'; // Slide in from right
+                setTimeout(() => {
+                    iframe.style.transform = 'translateX(0)'; // Position reset
+                }, 50);
+            }, 500);
+            currentSlide = slideNumber;
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide > 1) ? currentSlide - 1 : totalSlides;
+            showSlide(currentSlide);
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide < totalSlides) ? currentSlide + 1 : 1;
+            showSlide(currentSlide);
+        }
+
+        function openFullScreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { // Firefox
+                elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { // IE/Edge
+                elem.msRequestFullscreen();
+            }
+            document.querySelector('.full-screen').style.display = 'none';
+            document.querySelector('.close-button').style.display = 'block';
+        }
+
+        function closeFullScreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) { // Firefox
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) { // Chrome, Safari and Opera
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { // IE/Edge
+                document.msExitFullscreen();
+            }
+            document.querySelector('.full-screen').style.display = 'block';
+            document.querySelector('.close-button').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Sentence Audio</title>
+</head>
+<body>
+    <p id="sentence1" style="cursor: pointer;">Un hamburger, s'il vous plaît. (햄버거 하나 주세요)</p>
+    <audio id="audio1" src="f.mp3"></audio>
+
+    <p id="sentence2" style="cursor: pointer;">Où sont les toilettes ? (화장실이 어디에요?)</p>
+    <audio id="audio2" src="w.mp3"></audio>
+
+    <script>
+        document.getElementById('sentence1').addEventListener('click', function() {
+            document.getElementById('audio1').play();
+        });
+        document.getElementById('sentence2').addEventListener('click', function() {
+            document.getElementById('audio2').play();
+        });
+    </script>
+</body>
+</html>
